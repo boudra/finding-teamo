@@ -1,0 +1,13 @@
+.project-list {
+  &-item {
+    padding: 1rem;
+    background: #fff;
+    margin-bottom: 2rem;
+    box-shadow: 0px 1px 5px rgba(black, 0.05);
+    border-radius: 3px;
+
+    h2 {
+      margin-top: 0;
+    }
+  }
+}

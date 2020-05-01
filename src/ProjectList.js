@@ -5,7 +5,7 @@ import "./ProjectList.scss";
 
 function ProjectItem(project) {
   return (
-    <div>
+    <div className="project-list-item">
       <h2>{project.title}</h2>
       <p>{project.description}</p>
     </div>
