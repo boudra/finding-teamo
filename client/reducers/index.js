@@ -15,9 +15,23 @@ const project = {
 };
 
 const initialState = {
-  projects: new Array(10).fill(project),
+  currentId: 0,
+  projects: [],
 };
 
-export default function(state = initialState, action) {
-  return state;
+export default function (state = initialState, action) {
+  switch (action.type) {
+    case "ADD_PROJECT":
+      const newProject = { id: state.currentId, ...action.payload };
+
+      return {
+        ...state,
+        currentId: state.currentId + 1,
+        projects: [...state.projects, newProject],
+      };
+
+    default:
+      return state;
+  }
+  console.log("CALLED", action);
 }
