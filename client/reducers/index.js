@@ -15,23 +15,27 @@ const project = {
 };
 
 const initialState = {
-  currentId: 0,
+  loading: false,
   projects: [],
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case "SHOW_LOADER":
+      return {...state, loading: true};
+
+    case "HIDE_LOADER":
+      return {...state, loading: false};
+
     case "ADD_PROJECT":
       const newProject = { id: state.currentId, ...action.payload };
 
       return {
         ...state,
-        currentId: state.currentId + 1,
         projects: [...state.projects, newProject],
       };
 
     default:
       return state;
   }
-  console.log("CALLED", action);
 }

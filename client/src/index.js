@@ -5,12 +5,9 @@ import reducers from "../reducers";
 
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import reduxThunk from 'redux-thunk';
 
 import App from "./App";
-
-const identity = store => next => action => {
-  return next(action);
-};
 
 const logger = store => next => action => {
   console.log("ACTION", action);
@@ -20,7 +17,7 @@ const logger = store => next => action => {
   return ret;
 };
 
-const store = createStore(reducers, applyMiddleware(identity, logger));
+const store = createStore(reducers, applyMiddleware(logger, reduxThunk));
 
 ReactDOM.render(
   <Provider store={store}>

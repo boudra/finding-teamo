@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import ReactDOM from "react-dom";
-import {useDispatch} from "react-redux";
+import {connect} from "react-redux";
 
 import "./ProjectList.scss";
 
-import {addProject} from "./action";
+import {createProject} from "./action";
+
 
 function ProjectItem({project}) {
   return (
@@ -15,9 +16,41 @@ function ProjectItem({project}) {
   );
 }
 
-export default function ({ projects }) {
-  const dispatch = useDispatch();
+function CreateProjectForm({createProject}) {
+  const initialState = { title: "", description: "" };
+  let [state, setState] = useState(initialState);
 
+  function onSubmit(e) {
+    e.preventDefault();
+    createProject(state);
+    setState(initialState);
+  }
+
+  function changeTitle(e) {
+    const newTitle = e.target.value;
+    setState((state) => ({...state, title: newTitle }));
+  }
+
+  function changeDescription(e) {
+    const newDescription = e.target.value;
+    setState((state) => ({...state, description: newDescription }));
+  }
+
+  return (
+    <form action="" onSubmit={onSubmit}>
+      <div className="group">
+        <input type="text" value={state.title} onChange={changeTitle} required />
+        <textarea id="" name="" value={state.description} onChange={changeDescription} required></textarea>
+      </div>
+      <div className="group">
+        <button>Submit</button>
+      </div>
+    </form>
+  );
+}
+
+
+function ProjectList({ projects, createProject }) {
   let defaultProject = {
     title: "title",
     description: "description",
@@ -25,7 +58,7 @@ export default function ({ projects }) {
 
   return (
     <section className="project-list">
-      <button onClick={() => dispatch(addProject(defaultProject))}>Add project</button>
+      <CreateProjectForm createProject={createProject} />
       <div>
         {projects.map((project) => (
           <div key={project.id}>
@@ -36,3 +69,6 @@ export default function ({ projects }) {
     </section>
   );
 }
+
+
+export default connect(null, {createProject})(ProjectList);
