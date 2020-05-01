@@ -1,13 +1,16 @@
 import "./App.scss";
 
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 
-import ProjectList from "./ProjectList.js";
+import ProjectList from "./ProjectList";
+import { fetchProjects } from "./action";
 
-export default function App() {
-  let projects = useSelector((state) => state.projects);
+export function App({ projects, fetchProjects }) {
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
   return (
     <div>
@@ -22,3 +25,7 @@ export default function App() {
     </div>
   );
 }
+
+export default connect((state) => ({ projects: state.projects }), {
+  fetchProjects,
+})(App);

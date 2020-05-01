@@ -27,6 +27,12 @@ export default function (state = initialState, action) {
     case "HIDE_LOADER":
       return {...state, loading: false};
 
+    case "SET_PROJECTS":
+      return {
+        ...state,
+        projects: action.payload
+      };
+
     case "ADD_PROJECT":
       const newProject = { id: state.currentId, ...action.payload };
 

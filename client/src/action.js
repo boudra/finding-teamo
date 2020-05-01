@@ -12,6 +12,22 @@ export function hideLoader() {
   };
 }
 
+export function fetchProjects() {
+  return (dispatch) => {
+    dispatch(showLoader());
+
+    fetch(`${apiEndpoint}/projects`, {
+      method: "GET"
+    })
+    .then((res) => res.json())
+    .then((projects) => {
+      dispatch(setProjects(projects));
+    })
+    .finally(() => {
+      dispatch(hideLoader());
+    });
+  };
+}
 export function createProject(project) {
   return (dispatch) => {
     dispatch(showLoader());
@@ -37,5 +53,12 @@ export function addProject(project) {
   return {
     type: "ADD_PROJECT",
     payload: project
+  };
+}
+
+export function setProjects(projects) {
+  return {
+    type: "SET_PROJECTS",
+    payload: projects
   };
 }
